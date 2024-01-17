@@ -1,3 +1,4 @@
+import json
 import time
 import telepot
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
@@ -77,10 +78,11 @@ class QuizBot:
             self.start_quiz(chat_id)
 
 # Replace 'YOUR_BOT_TOKEN' with your actual bot token
-bot_token = '6377345647:AAHdN2lWh63SxiQMO89smK8yaQ2IwB1m_7o'
-bot_instance = QuizBot(bot_token)
+with open("tokens.json", "r") as f:
+    bot_token = json.load(f)["telegram_token"]
+    bot_instance = QuizBot(bot_token)
 
-bot_instance.bot.message_loop({'chat': bot_instance.on_chat_message, 'callback_query': bot_instance.on_callback_query})
+    bot_instance.bot.message_loop({'chat': bot_instance.on_chat_message, 'callback_query': bot_instance.on_callback_query})
 
 print('Bot is listening...')
 
